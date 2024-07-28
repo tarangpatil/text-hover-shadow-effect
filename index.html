@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com/3.4.5"></script>
+    <style>
+      :root {
+        --x: -100px;
+        --y: -100px;
+      }
+      .conic-gradient {
+        background-image: conic-gradient(
+          darkblue,
+          darkgreen,
+          rgb(0, 146, 146),
+          darkblue
+        );
+        background-color: black;
+      }
+      .text-gradient {
+        background-image: conic-gradient(
+          lightblue,
+          lightgreen,
+          rgb(148, 255, 255),
+          lightblue
+        );
+        color: transparent;
+        background-clip: text;
+      }
+      #lens {
+        background-color: rgba(0, 0, 0, 0);
+        background-image: radial-gradient(
+          circle at var(--x) var(--y),
+          transparent 10%,
+          rgba(0, 0, 0, 0.9) 20%
+        );
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      class="bg-slate-600 min-h-screen flex justify-center items-center"
+    >
+      <div
+        class="bg-black rounded h-[65vh] w-[25%] flex items-center justify-center"
+      >
+        <div class="border-gray-600 border h-[90%] w-[90%] relative">
+          <div
+            class="text-white text-2xl absolute top-0 left-0 translate-x-[-50%] translate-y-[-50%]"
+          >
+            +
+          </div>
+          <div
+            class="text-white text-2xl absolute top-0 right-0 translate-x-[50%] translate-y-[-50%]"
+          >
+            +
+          </div>
+          <div
+            class="text-white text-2xl absolute bottom-0 right-0 translate-x-[50%] translate-y-[50%]"
+          >
+            +
+          </div>
+          <div
+            class="text-white text-2xl absolute bottom-0 left-0 translate-x-[-50%] translate-y-[50%]"
+          >
+            +
+          </div>
+          <div
+            id="hover-element"
+            class="conic-gradient text-white text-sm font-mono overflow-hidden h-full overflow-y-hidden relative"
+          >
+            <div
+              id="text-box"
+              class="text-gradient w-[100%] h-full text-wrap cursor-default select-none"
+            ></div>
+            <div id="light" class="fixed"></div>
+            <div
+              class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-black h-48 w-48 flex items-center justify-center rounded-full cursor-default select-none text-4xl text-center"
+            >
+              Hover
+            </div>
+            <div
+              id="lens"
+              class="absolute h-[65vh] w-[25vw] top-0 left-0"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const textBox = document.getElementById("text-box");
+    const hoverElement = document.getElementById("hover-element");
+    const hexChars = "0123456789abcdef";
+    textBox.innerHTML = "";
+    for (let i = 0; i < 50; i++) {
+      for (let j = 0; j < 50; j++) {
+        const idx = Math.floor(Math.random() * 16);
+        textBox.innerHTML += hexChars[idx];
+      }
+      textBox.innerHTML += "<br />";
+    }
+    document.documentElement.addEventListener("mousemove", (e) => {
+      const x = e.clientX - (innerWidth - hoverElement.clientWidth) / 2;
+      const y = e.clientY - (innerHeight - hoverElement.clientHeight) / 2;
+      hoverElement.style.setProperty("--x", `${x}px`);
+      hoverElement.style.setProperty("--y", `${y}px`);
+    });
+  </script>
+</html>
